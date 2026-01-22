@@ -1,52 +1,57 @@
-# Readability Analyzer (Shiny)
+# Readability + Credibility Signals Analyzer (Shiny)
 
-A Shiny application to **compare readability across multiple PDF documents** (up to 5 at once).  
-The app extracts and cleans text from PDFs, computes several standard readability indices, and provides interactive plots, tables, and downloadable results.
+Upload **1–5 PDFs** and compare them on classic + extended **readability metrics**, **relationships between metrics**, **readability over the document**, and **credibility-style text signals** (heuristics).
+
+> **Note:** “Credibility signals” here are **style/evidence indicators** (e.g., citations, numbers, hedging), **not fact-checking**. A document can look credible and still be wrong.
 
 ---
 
 ## Features
 
-- Upload **1–5 PDFs** and compare them side-by-side  
-- Automatic text cleaning:
-  - De-hyphenation across line breaks  
-  - Whitespace normalization  
-  - Optional removal of reference sections (regex-based heuristic)  
+### Readability metrics
+Computed per PDF after text extraction + cleaning:
+- **Flesch Reading Ease (FRE)** (higher = easier)
+- **Flesch–Kincaid Grade (FKG)** (higher = harder)
+- **Automated Readability Index (ARI)** (higher = harder)
+- **Linsear Write**
+- **Fry components** (syllables/100 + sentences/100; includes plot + samples table)
+- **Optional Spache** (requires a familiar word list)
+- **Gunning Fog**
+- **SMOG** (may be `NA` for short texts)
+- **Coleman–Liau**
+- **LIX / RIX** (often robust for EU-language texts)
 
-- Readability metrics:
-  - **Flesch Reading Ease** (higher = easier)  
-  - **Flesch–Kincaid Grade**  
-  - **Automated Readability Index (ARI)**  
-  - **Linsear Write**  
-  - **Fry components** (syllables / 100 words, sentences / 100 words)  
-  - Optional: **Spache** (original and revised) with a familiar-word list  
+### Relationships
+- **Correlation heatmap** between readability metrics (needs ≥2 PDFs)
+- **PCA plot** (“readability space”) to see how documents cluster (needs ≥2 PDFs)
 
-- Visual outputs:
-  - Dashboard for a selected document (banded colour plots + labels)  
-  - Comparison plots across documents  
-  - Fry plot with sample-level diagnostics  
+### Across-document readability
+- **Windowed readability**: split text into consecutive word windows (default **400 words**) and compute FRE + FKG per window to show **where** the document becomes harder/easier.
 
-- Tables and **downloadable CSV** with all metrics.
+### Credibility-style signals (heuristics)
+Per document:
+- **Evidence markers**: numbers, URLs, citation-like year patterns, “et al.”
+- **Hedges vs boosters**: “may/might/suggests” vs “clearly/obviously/proves/always”
+- **Style alarms**: ALL CAPS words, exclamation marks, question marks
+- Reported as counts and **per 1,000 words** densities.
+
+### Outputs
+- Interactive tables (DT)
+- **Downloadable CSV** combining readability + credibility signals across documents.
 
 ---
 
-## Requirements
+## Getting started
 
-The app uses the following R packages:
+### 1) Requirements
+- R (recent version recommended)
+- The following R packages:
+  - `shiny`, `pdftools`, `tokenizers`, `ggplot2`, `dplyr`, `tidyr`, `DT`, `tibble`, `stringr`, `purrr`, `scales`
 
-- shiny  
-- pdftools  
-- tokenizers  
-- ggplot2  
-- dplyr  
-- DT  
-- tidyr  
-- tibble  
-
-Install them with:
+Install them once:
 
 ```r
 install.packages(c(
-  "shiny", "pdftools", "tokenizers", "ggplot2",
-  "dplyr", "DT", "tidyr", "tibble"
+  "shiny","pdftools","tokenizers","ggplot2","dplyr","tidyr","DT",
+  "tibble","stringr","purrr","scales"
 ))
