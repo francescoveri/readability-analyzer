@@ -1,0 +1,52 @@
+# Readability Analyzer (Shiny)
+
+A Shiny application to **compare readability across multiple PDF documents** (up to 5 at once).  
+The app extracts and cleans text from PDFs, computes several standard readability indices, and provides interactive plots, tables, and downloadable results.
+
+---
+
+## Features
+
+- Upload **1–5 PDFs** and compare them side-by-side  
+- Automatic text cleaning:
+  - De-hyphenation across line breaks  
+  - Whitespace normalization  
+  - Optional removal of reference sections (regex-based heuristic)  
+
+- Readability metrics:
+  - **Flesch Reading Ease** (higher = easier)  
+  - **Flesch–Kincaid Grade**  
+  - **Automated Readability Index (ARI)**  
+  - **Linsear Write**  
+  - **Fry components** (syllables / 100 words, sentences / 100 words)  
+  - Optional: **Spache** (original and revised) with a familiar-word list  
+
+- Visual outputs:
+  - Dashboard for a selected document (banded colour plots + labels)  
+  - Comparison plots across documents  
+  - Fry plot with sample-level diagnostics  
+
+- Tables and **downloadable CSV** with all metrics.
+
+---
+
+## Requirements
+
+The app uses the following R packages:
+
+- shiny  
+- pdftools  
+- tokenizers  
+- ggplot2  
+- dplyr  
+- DT  
+- tidyr  
+- tibble  
+
+Install them with:
+
+```r
+install.packages(c(
+  "shiny", "pdftools", "tokenizers", "ggplot2",
+  "dplyr", "DT", "tidyr", "tibble"
+))
